@@ -1,26 +1,30 @@
 ﻿
 string[] transactionsFileContent = File.ReadAllLines(@"C:\Users\8184rj\source\repos\Support-Bank-C\SupportBank\SupportBank\Transactions2014.csv");
-
 transactionsFileContent = transactionsFileContent.Skip(1).ToArray();
 
 object[] transactions = new object[transactionsFileContent.Length];
 
-Console.WriteLine(transactions.Length);
-
-//List<string> transactions = new List<string>();
-
-foreach (string transaction in transactionsFileContent)
+for (int i = 0; i < transactionsFileContent.Length; i++)
 {
-    string[] tsplit = transaction.Split(',');
-    Transactions eachTransaction = new Transactions();
-    eachTransaction.Date = tsplit[0];
-    eachTransaction.From = tsplit[1];
-    eachTransaction.To = tsplit[2];
-    eachTransaction.Narrative = tsplit[3];
-    eachTransaction.Amount = Convert.ToInt32(tsplit[4]);
-    //transactions.Add(eachTransaction); // <------
-    Console.WriteLine(tsplit[0]);
+    string[] transactionItems = transactionsFileContent[i].Split(',');
+    Transactions transaction = new Transactions();
+    transaction.Date = transactionItems[0];
+    transaction.From = transactionItems[1];
+    transaction.To = transactionItems[2];
+    transaction.Narrative = transactionItems[3];
+    transaction.Amount = transactionItems[4];
+
+    transactions[i] = transaction;
 }
+
+foreach (object item in transactions)
+{
+    Console.WriteLine(item);
+}
+
+Console.WriteLine(transactions.Length);
+Console.WriteLine(transactionsFileContent[0]);
+Console.WriteLine(transactions[0]);
 
 
 class Account
@@ -34,7 +38,5 @@ class Transactions
     public string From { get; set; }
     public string To { get; set; }
     public string Narrative { get; set; }
-    public int Amount { get; set; }
+    public string Amount { get; set; }
 }
-
-//new Transactions(tsplit[0], tsplit[1]), tsplit[2], tsplit[3], tsplit[4]
